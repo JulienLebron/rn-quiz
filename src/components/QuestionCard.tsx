@@ -1,15 +1,30 @@
 import { Text, View, StyleSheet } from "react-native";
 import AnswerOption from "./AnswerOption";
+import { Question } from "../types";
 
-export default function QuestionCard() {
+type QuestionCard = {
+  question: Question;
+};
+
+export default function QuestionCard({ question }: QuestionCard) {
+  const selectedOption = question.options[3];
+
+  const onOptionSelected = (option: string) => {
+    console.warn("Selected: ", option);
+  };
+
   return (
     <View style={styles.questionCard}>
-      <Text style={styles.question}>What is React Native</Text>
-      <View style={{ gap: 5 }}>
-        <AnswerOption />
-        <AnswerOption />
-        <AnswerOption />
-        <AnswerOption />
+      <Text style={styles.question}>{question.title}</Text>
+      <View style={{ gap: 10 }}>
+        {question.options.map((option) => (
+          <AnswerOption
+            key={option}
+            option={option}
+            isSelected={option === selectedOption}
+            onPress={() => onOptionSelected(option)}
+          />
+        ))}
       </View>
     </View>
   );
@@ -19,7 +34,6 @@ const styles = StyleSheet.create({
   questionCard: {
     backgroundColor: "white",
     padding: 20,
-    paddingVertical: 40,
     borderRadius: 20,
     gap: 20,
 

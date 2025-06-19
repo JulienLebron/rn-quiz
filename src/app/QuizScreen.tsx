@@ -3,8 +3,9 @@ import QuestionCard from "../components/QuestionCard";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import questions from "../questions";
 import Card from "../components/Card";
+import CustomButton from "../components/CustomButton";
 
-const question = questions[1];
+const question = questions[0];
 
 export default function QuizScreen() {
   return (
@@ -27,18 +28,13 @@ export default function QuizScreen() {
           </Card>
         )}
         {/* Footer */}
-        <Pressable
-          onPress={() => console.warn("Pressed")}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Next</Text>
-          <FontAwesome6
-            name="arrow-right-long"
-            size={16}
-            color="white"
-            style={styles.buttonIcon}
-          />
-        </Pressable>
+        <CustomButton
+          title="Next"
+          onPress={() => console.warn("Custom button Pressed")}
+          rightIcon={
+            <FontAwesome6 name="arrow-right-long" size={16} color="white" />
+          }
+        />
       </View>
     </SafeAreaView>
   );

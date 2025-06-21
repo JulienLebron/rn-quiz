@@ -19,12 +19,7 @@ export default function QuestionCard({ question }: QuestionCard) {
     <Card title={question.title}>
       <View style={{ gap: 10 }}>
         {question.options.map((option) => (
-          <AnswerOption
-            key={option}
-            option={option}
-            isSelected={option === selectedOption}
-            onPress={() => onOptionSelected(option)}
-          />
+          <AnswerOption key={option} option={option} />
         ))}
       </View>
     </Card>

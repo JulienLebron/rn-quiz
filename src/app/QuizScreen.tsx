@@ -7,7 +7,7 @@ import { useQuizContext } from "./providers/QuizProvider";
 import { useEffect } from "react";
 import { useTimer } from "../hooks/useTimer";
 import LottieView from "lottie-react-native";
-import party from "../../assets/party.json";
+import React from "react";
 
 export default function QuizScreen() {
   const { question, questionIndex, onNext, score, totalQuestions, bestScore } =
@@ -16,15 +16,16 @@ export default function QuizScreen() {
   const { time, startTimer, clearTimer } = useTimer(20);
 
   useEffect(() => {
-    startTimer();
+    if (!question) return;
 
+    startTimer();
     return () => {
       clearTimer();
     };
   }, [question]);
 
   useEffect(() => {
-    if (time <= 0) {
+    if (time <= 0 && question) {
       onNext();
     }
   }, [time]);
@@ -34,9 +35,15 @@ export default function QuizScreen() {
       <View style={styles.container}>
         {/* Header  */}
         <View>
-          <Text style={styles.title}>
-            Question {questionIndex + 1}/{totalQuestions}
-          </Text>
+          {!question ? (
+            <Text style={styles.title}>
+              Question {questionIndex}/{totalQuestions}
+            </Text>
+          ) : (
+            <Text style={styles.title}>
+              Question {questionIndex + 1}/{totalQuestions}
+            </Text>
+          )}
         </View>
         {/* Body */}
         {question ? (
@@ -62,7 +69,7 @@ export default function QuizScreen() {
         )}
         {/* Footer */}
         <CustomButton
-          title="Next"
+          title={question ? "Next" : "Try Again"}
           onPress={onNext}
           rightIcon={
             <FontAwesome6 name="arrow-right-long" size={16} color="white" />

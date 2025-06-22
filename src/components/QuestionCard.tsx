@@ -2,18 +2,30 @@ import { View } from "react-native";
 import AnswerOption from "./AnswerOption";
 import { Question } from "../types";
 import Card from "./Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type QuestionCard = {
   question: Question;
 };
 
 export default function QuestionCard({ question }: QuestionCard) {
-  const [selectedOption, setSelectedOption] = useState<string | undefined>();
+  useEffect(() => {
+    console.log("Question card mounted");
 
-  const onOptionSelected = (option: string) => {
-    setSelectedOption(option);
-  };
+    return () => {
+      console.log("Question card UNmounted");
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("Question changed");
+    // start listening this this question updates
+
+    return () => {
+      console.log("Question card change: Cleanup");
+      // stop listening this this question updates
+    };
+  }, [question]);
 
   return (
     <Card title={question.title}>
